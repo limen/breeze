@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.limengxiang.breeze.model.dao.ExecutorMapper">
+    <insert id="insert">
+        INSERT INTO brz_executor (id,name,type,config,params)
+        VALUES (#{id},#{name},#{type},#{config},#{params})
+    </insert>
+    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.limengxiang.breeze.model.entity.ExecutorEntity">
+        INSERT INTO brz_executor (name,type,config,params)
+        VALUES (#{name},#{type},#{config},#{params})
+    </insert>
+    <update id="update">
+        UPDATE brz_executor
+        SET name = #{name},type = #{type},confif = #{config},params = #{params}
+        WHERE id=#{id}
+    </update>
+    <select id="findOne" resultType="com.limengxiang.breeze.model.entity.ExecutorEntity">
+        SELECT * FROM brz_executor
+        WHERE id = #{id} LIMIT 1
+    </select>
+</mapper>

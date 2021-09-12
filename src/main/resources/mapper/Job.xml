@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.limengxiang.breeze.model.dao.JobMapper">
+    <insert id="insert">
+        INSERT INTO brz_job (job_id,job_name,schedule_at,executor_id,job_params)
+        VALUES (#{jobId},#{jobName},#{scheduleAt},#{executorId},#{params})
+    </insert>
+    <select id="queryRange" resultType="Object">
+        SELECT job_id FROM brz_job WHERE job_id >= #{jobIdLow} AND job_id &lt;= #{jobIdUp}
+        ORDER by job_id LIMIT #{limit}
+    </select>
+    <select id="lastJobIdInRange" resultType="Long">
+        SELECT job_id FROM brz_job WHERE job_id >= #{jobIdLow} AND job_id &lt;= #{jobIdUp}
+        ORDER by job_id DESC LIMIT 1;
+    </select>
+    <select id="jobStat" resultType="com.limengxiang.breeze.model.entity.JobStatEntity">
+        SELECT job.job_id,log.status AS exec_status
+        FROM brz_job job
+            LEFT JOIN brz_job_exec_log log
+                ON job.job_id = log.job_id
+        WHERE job.job_id >= #{jobIdLow}
+        AND job.job_id &lt;= #{jobIdUp}
+        <if test="execStatus!=null">AND log.status=#{execStatus}</if>
+        ORDER BY id DESC
+    </select>
+    <select id="jobLogs" resultType="com.limengxiang.breeze.model.entity.JobExecLogEntity">
+        SELECT * FROM brz_job_exec_log
+        WHERE job_id = #{jobId}
+        ORDER BY id DESC
+    </select>
+    <select id="jobDetail" resultType="com.limengxiang.breeze.model.entity.JobEntity">
+        SELECT * FROM brz_job
+        WHERE job_id = #{jobId} LIMIT 1
+    </select>
+</mapper>

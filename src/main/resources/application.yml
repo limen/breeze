@@ -1,0 +1,55 @@
+server:
+  port: 8080
+spring:
+  datasource:
+#    url: jdbc:mysql://139.129.96.74:3306/evercron
+#    username: admin_ec
+#    password: 'Imadminec+1'
+    url: jdbc:mysql://127.0.0.1:3306/h2?useUnicode=true&characterEncoding=UTF-8
+    username: h2admin
+    password: H2admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 8
+      max-active: 8
+      max-wait: 30000
+      default-auto-commit: true
+      filter:
+        # sql stat
+        stat:
+          enabled: false
+          log-slow-sql: false
+          slow-sql-millis: 50
+  redis:
+#    host: 139.129.96.74
+#    port: 6379
+#    password: frA5Bt6R
+    host: 127.0.0.1
+    port: 6379
+    password: forbared
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 4
+        max-idle: 8
+        max-wait: 30000
+      shutdown-timeout: 100
+#  jackson:
+#    property-naming-strategy: SNAKE_CASE
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+breeze:
+  deploy-mode: single
+  instance-id: 2
+  job-scan-batch-size: 100
+  job-queue-busy-size: 2000
+  job-thread-pool-busy-size: 100
+  coordinator-duty-period: 10
+  start-workers: true
+  admin-token: K7Izj@iM2mmntGT$J
+
