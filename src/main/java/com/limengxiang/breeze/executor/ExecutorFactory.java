@@ -14,13 +14,12 @@ public class ExecutorFactory {
         ExecutorConst.ExecutorType executorType = ExecutorConst.ExecutorType.valueOf(entity.getType());
         switch (executorType) {
             case http:
-            case https:
                 AbstractExecutor executor = new HttpExecutor();
                 executor.setEntity(entity);
                 executor.parseConfig();
                 return executor;
             case stdout:
-                return new StdoutExecutor();
+                return new StdoutExecutor(entity);
             default:
                 throw new RuntimeException("Unsupported executor type:" + entity.getType());
 

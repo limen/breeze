@@ -44,8 +44,14 @@ public class HttpExecutor extends AbstractExecutor {
                 httpHeaders.set(key, httpConfig.headers.get(key));
             }
         }
-        ResponseEntity<String> responseEntity = HttpUtil.post(httpConfig.uri, this.params, httpHeaders, String.class);
-        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+        ResponseEntity<String> responseEntity = null;
+        Exception ex = null;
+        try {
+            responseEntity = HttpUtil.call(httpConfig.uri, httpConfig.method, this.params, httpHeaders, String.class);
+        } catch (Exception e) {
+            ex = e;
+        }
+        if (ex == null && responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             Map body = JSONUtil.parse(responseEntity.getBody(), Map.class);
             Object codeValue = body.get(this.httpConfig.codeName);
             execResult.setExecStatus(codeValue != null && codeValue.equals(this.httpConfig.codeOK) ?
@@ -54,7 +60,7 @@ public class HttpExecutor extends AbstractExecutor {
             execResult.setExecStatus(ExecutorConst.ExecStatus.sync_err);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(responseEntity);
+        sb.append(ex == null ? responseEntity.getBody() : ex.getMessage());
         sb.append(" << ");
         sb.append(JSONUtil.stringify(entity));
         execResult.setContext(sb.length() > 2048 ? sb.substring(0, 2048) : sb.toString());

@@ -14,6 +14,10 @@ abstract public class AbstractExecutor {
 
      public AbstractExecutor() {}
 
+     public AbstractExecutor(ExecutorEntity entity) {
+          this.entity = entity;
+     }
+
      abstract protected void parseConfig();
 
      abstract public ExecResult exec(JobEntity job);

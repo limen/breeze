@@ -33,7 +33,6 @@ public class ExecutorConst {
 
     public enum ExecutorType {
         http,
-        https,
         stdout,
         ;
     }
