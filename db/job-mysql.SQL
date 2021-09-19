@@ -59,4 +59,7 @@ create table brz_audit_log (
   key idx_created_at (created_at)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
+-- 测试用, 注意修改token
+insert into brz_app_credential (app_id, app_name, token, privilege) values ('brz_admin', 'admin', 'Brz_admin', 4096);
+
 

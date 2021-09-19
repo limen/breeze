@@ -21,7 +21,7 @@ public class Config {
 
     public enum DeployMode {
         single,
-        multi
+        cluster
         ;
     }
 
@@ -37,9 +37,7 @@ public class Config {
 
     private int jobScanBatchSize;
 
-    private int coordinatorDutyPeriod;
-
-    private String adminToken;
+    private int coordinatorDutyMaxPeriod;
 
     public boolean startWorkers() {
         return startWorkers;

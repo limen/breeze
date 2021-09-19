@@ -13,27 +13,27 @@ public class JdkCoordinator implements ICoordinator {
 
     private final Object lock = new Object();
 
-    private final int dutyPeriod;
+    private final int dutyMaxPeriod;
 
     public JdkCoordinator() {
         cursorTick = System.currentTimeMillis() / 1000;
-        dutyPeriod = 10;
+        dutyMaxPeriod = 10;
     }
 
     public JdkCoordinator(long cursorTick) {
         this.cursorTick = cursorTick;
-        dutyPeriod = 10;
+        dutyMaxPeriod = 10;
     }
 
     public JdkCoordinator(long cursorTick, int dutyPeriod) {
         this.cursorTick = cursorTick;
-        this.dutyPeriod = dutyPeriod;
+        this.dutyMaxPeriod = dutyPeriod;
     }
 
     public JdkCoordinator(Config config) {
         this.config = config;
         cursorTick = System.currentTimeMillis() / 1000;
-        dutyPeriod = config.getCoordinatorDutyPeriod();
+        dutyMaxPeriod = config.getCoordinatorDutyMaxPeriod();
     }
 
     public long getCursorTick() {
@@ -47,8 +47,8 @@ public class JdkCoordinator implements ICoordinator {
             if (ts >= cursorTick) {
                 long tickTo;
                 // limit max duty period
-                if (ts - cursorTick > dutyPeriod - 1) {
-                    tickTo = cursorTick + dutyPeriod - 1;
+                if (ts - cursorTick > dutyMaxPeriod - 1) {
+                    tickTo = cursorTick + dutyMaxPeriod - 1;
                 } else {
                     tickTo = ts;
                 }

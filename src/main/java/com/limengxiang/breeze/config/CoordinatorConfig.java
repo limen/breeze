@@ -21,7 +21,7 @@ public class CoordinatorConfig {
 
     @Bean
     public ICoordinator coordinatorBean(@Autowired Config config) {
-        if (config.getDeployMode().equals(Config.DeployMode.multi)) {
+        if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
             return new RedisCoordinator(config);
         }
         return new JdkCoordinator(config);

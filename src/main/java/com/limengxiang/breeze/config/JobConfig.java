@@ -22,7 +22,7 @@ public class JobConfig {
     @Bean
     public IJobQueue jobQueueBean(@Autowired Config config,
                                   @Autowired RedisOps redisOps) {
-        if (config.getDeployMode().equals(Config.DeployMode.multi)) {
+        if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
             return new RedisJobQueue(redisOps);
         }
         return new JdkJobQueue();
@@ -32,7 +32,7 @@ public class JobConfig {
     public IJobIdManager jobIdManagerBean(@Autowired Config config,
                                           @Autowired JobModel jobModel,
                                           @Autowired(required = false) RedisOps redisOps) {
-        if (config.getDeployMode().equals(Config.DeployMode.multi)) {
+        if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
             RedisJobIdManager jobIdManager = new RedisJobIdManager(redisOps, jobModel);
             jobIdManager.setConfig(config);
             return jobIdManager;

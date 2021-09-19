@@ -27,7 +27,7 @@ public class RedisConfig {
 
         @Override
         public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
-            return conditionContext.getEnvironment().getProperty("breeze.deploy-mode").equals("multi");
+            return Config.DeployMode.cluster.name().equals(conditionContext.getEnvironment().getProperty("breeze.deploy-mode"));
         }
     }
 
