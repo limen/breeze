@@ -10,9 +10,11 @@ A light and enjoyable job broker.
 
 ## 轻量
 
+极少的中间件依赖
+
 - 在单例模式下，只依赖mysql/pgsql
 - 在集群模式下，增加了对redis的依赖
-- 资源消耗低，内存占用通常低于500MB
+- 资源消耗低，内存占用通常低于 300MB
 
 ## 安全性
 
@@ -21,7 +23,7 @@ A light and enjoyable job broker.
 
 ## 运行
 
-已测试的环境
+已测试的依赖版本
 
 - Java 8
 - MySQL 8.0
@@ -36,6 +38,18 @@ A light and enjoyable job broker.
 修改 application.yml
 
 ## 性能
+
+OS: Win10 
+
+CPU: 6核 12线程
+
+MySQL 8
+
+内存：16G
+
+执行器类型
+- stdout，任务数量1000，耗时约1s
+- http， 127.0.0.1:8080/test/echo，任务数量1000，耗时约1s
 
 ## 概念
 

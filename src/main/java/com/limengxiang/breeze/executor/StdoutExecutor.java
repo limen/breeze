@@ -22,7 +22,7 @@ public class StdoutExecutor extends AbstractExecutor {
     @Override
     public ExecResult exec(JobEntity job) {
         ExecResult result = new ExecResult();
-        result.setContext("Stdout: job id #" + job.getJobId());
+        result.setContext("Stdout: job id:" + job.getJobId() + ",params:" + job.getJobParams());
         result.setExecStatus(ExecutorConst.ExecStatus.sync_ok);
         result.setEnd(new Date());
         return result;
