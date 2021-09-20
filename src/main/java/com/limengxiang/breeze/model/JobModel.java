@@ -7,6 +7,7 @@ import com.limengxiang.breeze.model.entity.JobStatEntity;
 import com.limengxiang.breeze.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ public class JobModel {
     @Autowired
     private JobMapper jobMapper;
 
+    @Transactional
     public void create(Long jobId, String jobName, Date scheduleAt, Long executorId, Object params) {
         String strParams = params instanceof String ? (String) params : JSONUtil.stringify(params);
         jobMapper.insert(jobId, jobName, scheduleAt, executorId, strParams);

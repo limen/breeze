@@ -12,8 +12,8 @@ import java.lang.annotation.Annotation;
 public class TemporalFunc implements ValidateFunc {
     @Override
     public Boolean apply(Annotation an, Object v) {
-        if (!((Temporal) an).required() && StrUtil.isEmpty((String) v)) {
-            return true;
+        if (StrUtil.isEmpty((String) v)) {
+            return !((Temporal) an).required();
         }
         return Validation.temporal((String) v);
     }

@@ -135,11 +135,11 @@ curl --location --request POST '127.0.0.1:8080/executor/create' \
 
 参数
 
-- execAfter 延时时间长度，单位秒，0代表立即执行，最大允许值3600
+- execAfter 延时时间长度，单位秒，0代表立即执行，超过3600秒需使用execAt参数
 - execAt  执行时间，和execAfter二选一，优先级高于execAfter
 - jobName 任务名称
 - executorId 执行器ID
-- jobParams 任务参数
+- params 任务参数
 
 返回：任务ID
 
@@ -191,6 +191,23 @@ curl --location --request POST '127.0.0.1:8080/job/create' \
 
 ```
 curl --location --request GET '127.0.0.1:8080/job/logs?jobId=1711254935699457' \
+--header 'AppId: brz_admin' \
+--header 'AppToken: Brz_admin'
+```
+
+### 查询审计日志
+
+参数
+
+- fromTime 起始时间 
+- toTime 截止时间
+- appId 
+- uri 接口路径, 如/job/create
+- fromId 分界id值 
+- limit 返回数量
+
+```
+curl --location --request GET '127.0.0.1:8080/auditLog/list?fromTime=2021-09-20 08:00:00&toTime=2021-09-20 09:00:00&appId=&uri&limit=1&fromId=3' \
 --header 'AppId: brz_admin' \
 --header 'AppToken: Brz_admin'
 ```

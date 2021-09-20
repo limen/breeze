@@ -12,6 +12,6 @@ public interface PointHandler {
 
     void before(ProceedingJoinPoint joinPoint, HttpServletRequest request);
 
-    void after(ProceedingJoinPoint joinPoint, HttpServletRequest request);
+    void after(ProceedingJoinPoint joinPoint, Object[] args, Object resp);
 
 }

@@ -13,8 +13,8 @@ public class LengthFunc implements ValidateFunc {
     @Override
     public Boolean apply(Annotation an, Object v) {
         Length length = (Length) an;
-        if (!length.required() && StrUtil.isEmpty((String) v)) {
-            return true;
+        if (StrUtil.isEmpty((String) v)) {
+            return !length.required();
         }
         return Validation.length((String) v, length.min(), length.max());
     }

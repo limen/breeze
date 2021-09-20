@@ -29,11 +29,14 @@ spring:
         max-idle: 8
         max-wait: 30000
       shutdown-timeout: 100
+  jackson:
+    date-format: 'yyyy-MM-dd HH:mm:ss'
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     mapUnderscoreToCamelCase: true
+
 
 breeze:
   deploy-mode: single

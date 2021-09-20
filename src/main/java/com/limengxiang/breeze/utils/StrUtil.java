@@ -24,6 +24,13 @@ public class StrUtil {
         return obj == null ? "" : String.valueOf(obj);
     }
 
+    public static String trimToLength(String input, int length) {
+        if (input == null || length < 0 || input.length() <= length) {
+            return input;
+        }
+        return input.substring(0, length);
+    }
+
     /**
      * 是否空字符串或null
      * @param str

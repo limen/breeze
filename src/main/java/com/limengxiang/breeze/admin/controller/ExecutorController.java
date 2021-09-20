@@ -8,6 +8,7 @@ import com.limengxiang.breeze.httpio.response.RespFactory;
 import com.limengxiang.breeze.model.ExecutorModel;
 import com.limengxiang.breeze.model.entity.ExecutorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +22,7 @@ public class ExecutorController {
 
     @AuditPoint
     @PostMapping(ApiConst.URI_EXEC_CREATE)
+    @Transactional
     public RespEntity create(@RequestBody ExecutorEntity entity) {
         entity.validate().throwOnError();
         executorModel.create(entity);

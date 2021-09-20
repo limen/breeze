@@ -5,11 +5,15 @@ package com.limengxiang.breeze.utils;
  */
 public class Assertions {
 
-    public static void notNull(Object... args) {
-        for (Object o : args) {
-            if (o == null) {
-                throw new RuntimeException("Args must not be null");
-            }
+    public static void notNull(Object arg) {
+        if (arg == null) {
+            throw new NullPointerException("Arg must not be null");
+        }
+    }
+
+    public static void notNull(Object arg, String msg) {
+        if (arg == null) {
+            throw new NullPointerException(msg);
         }
     }
 }

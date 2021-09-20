@@ -61,7 +61,7 @@ public class AopConfig {
         }
         Object p = joinPoint.proceed();
         for (PointType pointType : pointTypes) {
-            PointHandlerFactory.getHandler(pointType).after(joinPoint, request);
+            PointHandlerFactory.getHandler(pointType).after(joinPoint, joinPoint.getArgs(), p);
         }
         return p;
     }

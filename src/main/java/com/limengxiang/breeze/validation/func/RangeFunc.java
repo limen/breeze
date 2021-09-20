@@ -12,8 +12,8 @@ public class RangeFunc implements ValidateFunc {
     @Override
     public Boolean apply(Annotation annotation, Object v) {
         Range range = (Range) annotation;
-        if (v == null && !range.required()) {
-            return true;
+        if (v == null) {
+            return !range.required();
         }
         return Validation.range((Number) v, range.min(), range.max());
     }

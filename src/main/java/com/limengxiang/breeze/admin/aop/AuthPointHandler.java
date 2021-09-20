@@ -42,5 +42,5 @@ public class AuthPointHandler implements PointHandler {
     }
 
     @Override
-    public void after(ProceedingJoinPoint joinPoint, HttpServletRequest request) {}
+    public void after(ProceedingJoinPoint joinPoint, Object[] args, Object resp) {}
 }
