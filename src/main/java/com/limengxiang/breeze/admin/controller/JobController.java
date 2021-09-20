@@ -77,13 +77,13 @@ public class JobController {
     @AuthPoint
     @GetMapping(ApiConst.URI_JOB_DETAIL)
     public RespEntity detail(@RequestParam("jobId") String jobId) {
-        return RespFactory.success(jobModel.jobDetail(jobId));
+        return RespFactory.success(jobModel.jobDetail(Long.valueOf(jobId)));
     }
 
     @AuthPoint
     @GetMapping(ApiConst.URI_JOB_LOGS)
     public RespEntity logs(@RequestParam("jobId") String jobId) {
-        return RespFactory.success(jobModel.jobLogs(jobId));
+        return RespFactory.success(jobModel.jobLogs(Long.valueOf(jobId)));
     }
 
     @AuthPoint

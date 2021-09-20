@@ -18,7 +18,7 @@ public class JobExecLogModel {
     @Autowired
     private JobExecLogMapper mapper;
 
-    public void saveLog(Object jobId, ExecResult result) {
+    public void saveLog(Long jobId, ExecResult result) {
         mapper.insert(
                 jobId,
                 result.getContext(),

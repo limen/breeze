@@ -38,7 +38,9 @@ public class NumUtil {
     }
 
     public static Long toLong(Object s) {
-        Assertions.notNull(s);
+        if (s == null) {
+            return null;
+        }
         String s1 = StrUtil.valueOf(s);
         return toLong(s1);
     }

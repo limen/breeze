@@ -14,7 +14,7 @@ public class JobPostExecHandler {
     @Autowired
     JobExecLogModel jobExecLogModel;
 
-    public void handle(Object jobId, ExecResult result) {
+    public void handle(Long jobId, ExecResult result) {
         jobExecLogModel.saveLog(jobId, result);
     }
 }

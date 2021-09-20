@@ -1,5 +1,6 @@
 package com.limengxiang.breeze.httpio.request;
 
+import com.limengxiang.breeze.utils.DateUtil;
 import com.limengxiang.breeze.utils.NumUtil;
 import com.limengxiang.breeze.utils.StrUtil;
 import com.limengxiang.breeze.validation.annotation.Length;
@@ -7,6 +8,7 @@ import com.limengxiang.breeze.validation.annotation.Temporal;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @author LI Mengxiang <limengxiang876@gmail.com>
@@ -23,6 +25,9 @@ public class AuditLogQueryEntity extends AbstractEntity {
     private String uri;
     private Integer fromId;
     private Integer limit;
+
+    private Date fromTimestamp;
+    private Date toTimestamp;
 
     public AuditLogQueryEntity(HttpServletRequest request) {
         fromTime = request.getParameter("fromTime");
@@ -46,5 +51,7 @@ public class AuditLogQueryEntity extends AbstractEntity {
         if (toTime.compareTo(fromTime) <= 0) {
             addError("time", "toTime must be later than fromTime");
         }
+        fromTimestamp = DateUtil.parse(fromTime);
+        toTimestamp = DateUtil.parse(toTime);
     }
 }

@@ -8,20 +8,20 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class JdkJobQueue implements IJobQueue {
 
-    private LinkedBlockingQueue<Object> queue;
+    private LinkedBlockingQueue<Long> queue;
 
     public JdkJobQueue() {
         queue = new LinkedBlockingQueue<>();
     }
 
     @Override
-    public long push(List jobIds) {
+    public long push(List<Long> jobIds) {
         queue.addAll(jobIds);
         return queue.size();
     }
 
     @Override
-    public Object pop() {
+    public Long pop() {
         return queue.poll();
     }
 

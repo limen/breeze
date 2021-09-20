@@ -7,9 +7,9 @@ import java.util.List;
  */
 public interface IJobQueue {
 
-    long push(List jobIds);
+    long push(List<Long> jobIds);
 
-    Object pop();
+    Long pop();
 
     long size();
 

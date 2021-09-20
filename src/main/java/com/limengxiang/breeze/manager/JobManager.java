@@ -9,6 +9,7 @@ import com.limengxiang.breeze.job.IJobQueue;
 import com.limengxiang.breeze.job.JobPostExecHandler;
 import com.limengxiang.breeze.model.JobModel;
 import com.limengxiang.breeze.model.entity.JobEntity;
+import com.limengxiang.breeze.utils.NumUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -130,7 +131,7 @@ public class JobManager {
         public void run() {
             try {
                 int jobNum = 0;
-                Object jobIdLow = null;
+                Long jobIdLow = null;
                 long jobIdUp = jobIdManager.lastOnTime(dutyInfo.tickTo());
                 long tickToMillis = dutyInfo.getTickTo() * 1000;
                 long firstJobIdForDuty = jobIdManager.firstOnTime(dutyInfo.tickFrom());
@@ -141,7 +142,7 @@ public class JobManager {
                         Thread.sleep(10);
                         continue;
                     }
-                    List jobIds = jobModel.queryRange(
+                    List<Long> jobIds = jobModel.queryRange(
                             jobIdLow == null ? firstJobIdForDuty : jobIdLow,
                             jobIdUp,
                             config.getJobScanBatchSize());
@@ -179,7 +180,7 @@ public class JobManager {
                         Thread.sleep(10);
                         continue;
                     }
-                    Object jobId = jobQueue.pop();
+                    Long jobId = jobQueue.pop();
                     if (jobId == null) {
                         Thread.sleep(1);
                         continue;
@@ -199,7 +200,7 @@ public class JobManager {
     @Data
     static class JobConsumer implements Runnable {
 
-        private Object jobId;
+        private Long jobId;
         private JobPostExecHandler jobPostExecHandler;
 
         @Override

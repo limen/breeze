@@ -33,7 +33,7 @@ public class JobModel {
      * @param limit
      * @return
      */
-    public List<String> queryRange(Object jobIdLow, Object jobIdUp, int limit) {
+    public List<Long> queryRange(Long jobIdLow, Long jobIdUp, int limit) {
         return jobMapper.queryRange(jobIdLow, jobIdUp, limit);
     }
 
@@ -43,19 +43,19 @@ public class JobModel {
      * @param jobIdUp
      * @return
      */
-    public Long lastJobIdInRange(Object jobIdLow, Object jobIdUp) {
+    public Long lastJobIdInRange(Long jobIdLow, Long jobIdUp) {
         return jobMapper.lastJobIdInRange(jobIdLow, jobIdUp);
     }
 
-    public List<JobStatEntity> jobStat(Object jobIdLow, Object jobIdUp, Integer status) {
+    public List<JobStatEntity> jobStat(Long jobIdLow, Long jobIdUp, Integer status) {
         return jobMapper.jobStat(jobIdLow, jobIdUp, status);
     }
 
-    public JobEntity jobDetail(Object jobId) {
+    public JobEntity jobDetail(Long jobId) {
         return jobMapper.jobDetail(jobId);
     }
 
-    public List<JobExecLogEntity> jobLogs(Object jobId) {
+    public List<JobExecLogEntity> jobLogs(Long jobId) {
         return jobMapper.jobLogs(jobId);
     }
 }

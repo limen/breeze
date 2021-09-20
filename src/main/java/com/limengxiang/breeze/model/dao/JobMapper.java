@@ -17,18 +17,18 @@ public interface JobMapper {
                 @Param("executorId") Long executorId,
                 @Param("params") String params);
 
-    List<String> queryRange(@Param("jobIdLow") Object jobIdLow,
-                            @Param("jobIdUp") Object jobIdUp,
+    List<Long> queryRange(@Param("jobIdLow") Long jobIdLow,
+                            @Param("jobIdUp") Long jobIdUp,
                             @Param("limit") int limit);
 
-    Long lastJobIdInRange(@Param("jobIdLow") Object jobIdLow,
-                          @Param("jobIdUp") Object jobIdUp);
+    Long lastJobIdInRange(@Param("jobIdLow") Long jobIdLow,
+                          @Param("jobIdUp") Long jobIdUp);
 
-    JobEntity jobDetail(@Param("jobId") Object jobId);
+    JobEntity jobDetail(@Param("jobId") Long jobId);
 
-    List<JobExecLogEntity> jobLogs(@Param("jobId") Object jobId);
+    List<JobExecLogEntity> jobLogs(@Param("jobId") Long jobId);
 
-    List<JobStatEntity> jobStat(@Param("jobIdLow") Object jobIdLow,
-                                @Param("jobIdUp") Object jobIdUp,
+    List<JobStatEntity> jobStat(@Param("jobIdLow") Long jobIdLow,
+                                @Param("jobIdUp") Long jobIdUp,
                                 @Param(("execStatus")) int execStatus);
 }

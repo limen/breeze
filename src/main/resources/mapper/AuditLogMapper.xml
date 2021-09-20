@@ -9,8 +9,8 @@
     </insert>
     <select id="find" parameterType="com.limengxiang.breeze.httpio.request.AuditLogQueryEntity" resultType="com.limengxiang.breeze.model.entity.AuditLogEntity">
         SELECT * FROM brz_audit_log
-        WHERE created_at >= #{fromTime}
-        AND created_at &lt;= #{toTime}
+        WHERE created_at >= #{fromTimestamp}
+        AND created_at &lt;= #{toTimestamp}
         <if test="fromId!=null and fromId>0">AND id>#{fromId}</if>
         <if test="appId!=null and appId!=''">AND app_id=#{appId}</if>
         <if test="appId!=null and appId!=''">AND app_id=#{appId}</if>

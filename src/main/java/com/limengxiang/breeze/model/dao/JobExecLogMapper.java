@@ -11,7 +11,7 @@ import java.util.Date;
 @Mapper
 public interface JobExecLogMapper {
 
-    void insert(@Param("jobId") Object jobId,
+    void insert(@Param("jobId") Long jobId,
                 @Param("context") String context,
                 @Param("execAt") Date execAt,
                 @Param("status") int status,

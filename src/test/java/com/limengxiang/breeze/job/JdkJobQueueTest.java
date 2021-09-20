@@ -13,7 +13,7 @@ public class JdkJobQueueTest {
     @Test
     public void testJobQueue() {
         JdkJobQueue jobQueue = new JdkJobQueue();
-        jobQueue.push(Arrays.asList(1,2,3));
+        jobQueue.push(Arrays.asList(1L,2L,3L));
         Assertions.assertEquals(jobQueue.size(), 3);
         Assertions.assertEquals(jobQueue.pop(), 1);
         Assertions.assertEquals(jobQueue.size(), 2);

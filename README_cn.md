@@ -26,7 +26,7 @@ A light and enjoyable job broker.
 已测试的依赖版本
 
 - Java 8
-- MySQL 8.0
+- MySQL 8.0, PostgreSQL 12
 - Redis 6.0
 
 ### 创建数据表
@@ -39,16 +39,19 @@ A light and enjoyable job broker.
 
 ## 性能
 
-OS: Win10 
+主机配置
 
-CPU: 6核 12线程
+- OS: Win10
+- CPU: 6核 12线程
+- 内存：16G
+- 固态硬盘
 
-MySQL 8
-
-内存：16G
-
-执行器类型
+MySQL 8 , 执行器类型
 - stdout，任务数量1000，耗时约1s
+- http， 127.0.0.1:8080/test/echo，任务数量1000，耗时约1s
+
+PostgreSQL 12 , 执行器类型
+- stdout，任务数量1000，耗时1s以内
 - http， 127.0.0.1:8080/test/echo，任务数量1000，耗时约1s
 
 ## 概念
