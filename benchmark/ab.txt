@@ -1,0 +1,1 @@
+ab -c 10 -n 1000 -T application/json -H 'AppId:brz_admin' -H 'AppToken:Brz_admin' -p job.txt http://127.0.0.1:8080/job/create

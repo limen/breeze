@@ -5,6 +5,7 @@ import com.limengxiang.breeze.consts.ApiConst;
 import com.limengxiang.breeze.exception.AuthException;
 import com.limengxiang.breeze.exception.InvalidParamException;
 import com.limengxiang.breeze.exception.PermissionException;
+import com.limengxiang.breeze.exception.WebServiceNotAvailableException;
 import com.limengxiang.breeze.httpio.response.RespEntity;
 import com.limengxiang.breeze.httpio.response.RespFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +31,18 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(PermissionException.class)
-    public RespEntity handlePrivException(HttpServletRequest request, Exception ex) {
+    public RespEntity handlePermissionException(HttpServletRequest request, Exception ex) {
         return RespFactory.error(ApiConst.CODE_PRIV_ERR, "Not permitted");
     }
 
     @ExceptionHandler(InvalidParamException.class)
     public RespEntity handleInvalidParam(HttpServletRequest request, InvalidParamException ex) {
         return RespFactory.raw(ApiConst.CODE_INVALID_PARAM, "Invalid param", ex.getErrors());
+    }
+
+    @ExceptionHandler(WebServiceNotAvailableException.class)
+    public RespEntity handleWebServiceNotAvailable(HttpServletRequest request, Exception ex) {
+        return RespFactory.error(ApiConst.CODE_ERR_DEFAULT, "Web service not available");
     }
 
     @ExceptionHandler(Exception.class)

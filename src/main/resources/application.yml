@@ -45,10 +45,11 @@ mybatis:
 
 
 breeze:
-  deploy-mode: cluster
+  deploy-mode: single
   job-scan-batch-size: 100
   job-queue-busy-size: 2000
   job-thread-pool-busy-size: 100
   coordinator-duty-max-period: 10
-  start-workers: true
+  job-consumer: true
+  web-server: true
 

@@ -29,7 +29,11 @@ public class Config {
 
     private int instanceId;
 
-    private boolean startWorkers;
+    // work as job consumer
+    private boolean jobConsumer;
+
+    // work as web server
+    private boolean webServer;
 
     private int jobQueueBusySize;
 
@@ -39,8 +43,7 @@ public class Config {
 
     private int coordinatorDutyMaxPeriod;
 
-    public boolean startWorkers() {
-        return startWorkers;
-    }
+    private int executorCacheTime = 120;
+    private int executorCacheCapacity = 1000;
 
 }

@@ -13,7 +13,7 @@
     </insert>
     <update id="update">
         UPDATE brz_executor
-        SET name = #{name},type = #{type},confif = #{config},params = #{params}
+        SET name = #{name},type = #{type},confif = #{config},params = #{params}, updated_at=current_timestamp
         WHERE id=#{id}
     </update>
     <select id="findOne" resultType="com.limengxiang.breeze.model.entity.ExecutorEntity">

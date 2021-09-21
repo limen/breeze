@@ -6,6 +6,7 @@ import com.limengxiang.breeze.config.Config;
 import com.limengxiang.breeze.consts.UtilConst;
 import com.limengxiang.breeze.exception.AuthException;
 import com.limengxiang.breeze.exception.PermissionException;
+import com.limengxiang.breeze.exception.WebServiceNotAvailableException;
 import com.limengxiang.breeze.manager.AuthManager;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,6 +30,10 @@ public class AuthPointHandler implements PointHandler {
 
     @Override
     public void before(ProceedingJoinPoint joinPoint, HttpServletRequest request) {
+        if (!config.isWebServer()) {
+            throw new WebServiceNotAvailableException();
+        }
+
         AuthCredential credential = appTokenManager.getCredential(request.getHeader(UtilConst.HEADER_APPID));
         if (credential == null
                 || credential.getToken() == null

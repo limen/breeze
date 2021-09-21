@@ -3,6 +3,7 @@ package com.limengxiang.breeze.manager;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.limengxiang.breeze.config.Config;
 import com.limengxiang.breeze.executor.AbstractExecutor;
 import com.limengxiang.breeze.executor.ExecutorFactory;
 import com.limengxiang.breeze.model.ExecutorModel;
@@ -20,11 +21,14 @@ import java.util.concurrent.TimeUnit;
 public class ExecutorManager {
 
     @Autowired
+    private Config config;
+
+    @Autowired
     private ExecutorModel executorModel;
 
     private final LoadingCache<Integer, AbstractExecutor> cache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
-            .expireAfterWrite(2, TimeUnit.MINUTES)
+            .maximumSize(config.getExecutorCacheCapacity())
+            .expireAfterWrite(config.getExecutorCacheTime(), TimeUnit.SECONDS)
             .build(
                     new CacheLoader<Integer, AbstractExecutor>() {
                         @Override

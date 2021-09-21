@@ -22,11 +22,11 @@ public class Commander {
 
         Config conf = SpringContextUtil.getBean(Config.class);
 
-        if (conf.startWorkers()) {
+        if (conf.isJobConsumer()) {
             log.info("Start job manager");
             JobManager.start(conf);
         } else {
-            log.info("Start without workers");
+            log.info("Start without job manager");
         }
     }
 
