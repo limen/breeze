@@ -31,7 +31,9 @@ A light and enjoyable job broker.
 
 ### 创建数据表
 
-见 [db/job-mysql.SQL](https://github.com/limen/breeze/blob/master/db/job-mysql.SQL)
+[db/job-mysql.SQL](https://github.com/limen/breeze/blob/master/db/job-mysql.SQL) 
+
+或 [db/job-pgsql.SQL](https://github.com/limen/breeze/blob/master/db/job-pgsql.SQL)
 
 ### 配置数据源
 
@@ -248,3 +250,15 @@ curl --location --request GET '127.0.0.1:8080/auditLog/list?fromTime=2021-09-20 
 - 128 创建
 - 256 删除
 - 512 更新
+
+## 项目信息
+
+处于beta状态，请谨慎用于生产环境。
+
+欢迎贡献代码或提issue。
+
+TODO
+
+- 管理界面
+- 单元测试，集成测试
+- 更多类型的执行器
