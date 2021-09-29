@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.model.dao;
 
-import com.limengxiang.breeze.httpio.request.AuditLogQueryEntity;
-import com.limengxiang.breeze.model.entity.AuditLogEntity;
+import com.limengxiang.breeze.http.request.AuditLogQueryEntity;
+import com.limengxiang.breeze.model.entity.db.AuditLogEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,6 +14,6 @@ public interface AuditLogMapper {
 
     void insert(AuditLogEntity logEntity);
 
-    List<AuditLogEntity> find(AuditLogQueryEntity queryEntity);
+    List<AuditLogEntity> query(AuditLogQueryEntity queryEntity);
 
 }

@@ -7,7 +7,7 @@
         INSERT INTO brz_executor (id,name,type,config,params)
         VALUES (#{id},#{name},#{type},#{config},#{params})
     </insert>
-    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.limengxiang.breeze.model.entity.ExecutorEntity">
+    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.limengxiang.breeze.model.entity.db.ExecutorEntity">
         INSERT INTO brz_executor (name,type,config,params)
         VALUES (#{name},#{type},#{config},#{params})
     </insert>
@@ -16,7 +16,7 @@
         SET name = #{name},type = #{type},confif = #{config},params = #{params}, updated_at=current_timestamp
         WHERE id=#{id}
     </update>
-    <select id="findOne" resultType="com.limengxiang.breeze.model.entity.ExecutorEntity">
+    <select id="queryById" resultType="com.limengxiang.breeze.model.entity.db.ExecutorEntity">
         SELECT * FROM brz_executor
         WHERE id = #{id} LIMIT 1
     </select>

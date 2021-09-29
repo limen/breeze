@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.config;
 
-import com.limengxiang.breeze.job.*;
-import com.limengxiang.breeze.model.JobModel;
+import com.limengxiang.breeze.domain.job.*;
+import com.limengxiang.breeze.model.JobService;
 import com.limengxiang.breeze.model.dao.RedisOps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +23,25 @@ public class JobConfig {
     public IJobQueue jobQueueBean(@Autowired Config config,
                                   @Autowired RedisOps redisOps) {
         if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
+            log.info("Using Redis job queue");
             return new RedisJobQueue(redisOps);
         }
+        log.info("Using JDK job queue");
         return new JdkJobQueue();
     }
 
     @Bean
-    public IJobIdManager jobIdManagerBean(@Autowired Config config,
-                                          @Autowired JobModel jobModel,
-                                          @Autowired(required = false) RedisOps redisOps) {
+    public IJobIdProvider jobIdManagerBean(@Autowired Config config,
+                                           @Autowired JobService jobService,
+                                           @Autowired(required = false) RedisOps redisOps) {
         if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
-            RedisJobIdManager jobIdManager = new RedisJobIdManager(redisOps, jobModel);
+            log.info("Using Redis job id provider");
+            RedisJobIdProvider jobIdManager = new RedisJobIdProvider(redisOps, jobService);
             jobIdManager.setConfig(config);
             return jobIdManager;
         }
-        JdkJobIdManager jobIdManager = new JdkJobIdManager(jobModel);
+        log.info("Using JDK job id provider");
+        JdkJobIdProvider jobIdManager = new JdkJobIdProvider(jobService);
         jobIdManager.setConfig(config);
         return jobIdManager;
     }

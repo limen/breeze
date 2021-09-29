@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.utils;
 
-import com.limengxiang.breeze.consts.UtilConst;
+import com.limengxiang.breeze.validation.Validation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +15,7 @@ public class DateUtil {
             return null;
         }
         try {
-            return parse(date, UtilConst.DATE_FORMAT_SEC);
+            return parse(date, Validation.DATE_FORMAT_SEC);
         } catch (Exception ex) {
             throw new RuntimeException("Parse data error:" + ex.getMessage() + ", input:" + date);
         }
@@ -31,7 +31,7 @@ public class DateUtil {
     }
 
     public static String format(Date d) {
-        return format(d, UtilConst.DATE_FORMAT_SEC);
+        return format(d, Validation.DATE_FORMAT_SEC);
     }
 
     public static String format(Date d, String fmt) {

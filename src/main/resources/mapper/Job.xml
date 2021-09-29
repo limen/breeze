@@ -7,7 +7,7 @@
         INSERT INTO brz_job (job_id,job_name,schedule_at,executor_id,job_params)
         VALUES (#{jobId},#{jobName},#{scheduleAt},#{executorId},#{params})
     </insert>
-    <select id="queryRange" resultType="Object">
+    <select id="queryJobIdsInRange" resultType="Object">
         SELECT job_id FROM brz_job WHERE job_id >= #{jobIdLow} AND job_id &lt;= #{jobIdUp}
         ORDER by job_id LIMIT #{limit}
     </select>
@@ -15,7 +15,7 @@
         SELECT job_id FROM brz_job WHERE job_id >= #{jobIdLow} AND job_id &lt;= #{jobIdUp}
         ORDER by job_id DESC LIMIT 1;
     </select>
-    <select id="jobStat" resultType="com.limengxiang.breeze.model.entity.JobStatEntity">
+    <select id="queryJobStat" resultType="com.limengxiang.breeze.model.entity.query.JobStatEntity">
         SELECT job.job_id,log.status AS exec_status
         FROM brz_job job
             LEFT JOIN brz_job_exec_log log
@@ -25,12 +25,12 @@
         <if test="execStatus!=null">AND log.status=#{execStatus}</if>
         ORDER BY id DESC
     </select>
-    <select id="jobLogs" resultType="com.limengxiang.breeze.model.entity.JobExecLogEntity">
+    <select id="queryJobLogs" resultType="com.limengxiang.breeze.model.entity.db.JobExecLogEntity">
         SELECT * FROM brz_job_exec_log
         WHERE job_id = #{jobId}
         ORDER BY id DESC
     </select>
-    <select id="jobDetail" resultType="com.limengxiang.breeze.model.entity.JobEntity">
+    <select id="queryByJobId" resultType="com.limengxiang.breeze.model.entity.db.JobEntity">
         SELECT * FROM brz_job
         WHERE job_id = #{jobId} LIMIT 1
     </select>

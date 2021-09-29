@@ -3,13 +3,13 @@ package com.limengxiang.breeze.manager;
 import com.limengxiang.breeze.SpringContextUtil;
 import com.limengxiang.breeze.concurrent.NamedThreadFactory;
 import com.limengxiang.breeze.config.Config;
-import com.limengxiang.breeze.executor.ExecResult;
-import com.limengxiang.breeze.job.IJobIdManager;
-import com.limengxiang.breeze.job.IJobQueue;
-import com.limengxiang.breeze.job.JobPostExecHandler;
-import com.limengxiang.breeze.model.JobModel;
-import com.limengxiang.breeze.model.entity.JobEntity;
-import com.limengxiang.breeze.utils.NumUtil;
+import com.limengxiang.breeze.domain.coordinator.ICoordinator;
+import com.limengxiang.breeze.domain.executor.ExecResult;
+import com.limengxiang.breeze.domain.job.IJobIdProvider;
+import com.limengxiang.breeze.domain.job.IJobQueue;
+import com.limengxiang.breeze.domain.job.JobPostExecHandler;
+import com.limengxiang.breeze.model.JobService;
+import com.limengxiang.breeze.model.entity.db.JobEntity;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +28,8 @@ public class JobManager {
     private static Config config;
 
     private static ICoordinator coordinator;
-    private static JobModel jobModel;
-    private static IJobIdManager jobIdManager;
+    private static JobService jobService;
+    private static IJobIdProvider jobIdManager;
     private static IJobQueue jobQueue;
     private static JobPostExecHandler jobPostExecHandler;
     private static ExecutorManager executorManager;
@@ -84,8 +84,8 @@ public class JobManager {
 
         config = conf;
         coordinator = SpringContextUtil.getBean(ICoordinator.class);
-        jobModel = SpringContextUtil.getBean(JobModel.class);
-        jobIdManager = SpringContextUtil.getBean(IJobIdManager.class);
+        jobService = SpringContextUtil.getBean(JobService.class);
+        jobIdManager = SpringContextUtil.getBean(IJobIdProvider.class);
         jobQueue = SpringContextUtil.getBean(IJobQueue.class);
         jobPostExecHandler = SpringContextUtil.getBean(JobPostExecHandler.class);
         executorManager = SpringContextUtil.getBean(ExecutorManager.class);
@@ -142,7 +142,7 @@ public class JobManager {
                         Thread.sleep(10);
                         continue;
                     }
-                    List<Long> jobIds = jobModel.queryRange(
+                    List<Long> jobIds = jobService.findJobIdsInRange(
                             jobIdLow == null ? firstJobIdForDuty : jobIdLow,
                             jobIdUp,
                             config.getJobScanBatchSize());
@@ -205,7 +205,7 @@ public class JobManager {
 
         @Override
         public void run() {
-            JobEntity jobEntity = jobModel.jobDetail(jobId);
+            JobEntity jobEntity = jobService.find(jobId);
             if (jobEntity == null) {
                 return;
             }

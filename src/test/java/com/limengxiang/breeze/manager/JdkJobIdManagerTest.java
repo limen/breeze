@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.manager;
 
-import com.limengxiang.breeze.job.JdkJobIdManager;
-import com.limengxiang.breeze.job.JobIdHelper;
+import com.limengxiang.breeze.domain.job.JdkJobIdProvider;
+import com.limengxiang.breeze.domain.job.JobIdHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public class JdkJobIdManagerTest {
 
     @Test
     public void testNext() {
-        JdkJobIdManager manager = new JdkJobIdManager(null);
+        JdkJobIdProvider manager = new JdkJobIdProvider(null);
         Assertions.assertEquals(JobIdHelper.getSeqValue(1, manager.nextOnTime(1)), 1);
         Assertions.assertEquals(JobIdHelper.getSeqValue(1, manager.nextOnTime(1)), 2);
         Assertions.assertEquals(JobIdHelper.getSeqValue(2, manager.nextOnTime(2)), 1);

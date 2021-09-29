@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
  */
 public class Validation {
 
+    public static final String DATE_FORMAT_SEC = "yyyy-MM-dd HH:mm:ss";
+
     public static Pattern temporalPattern = Pattern.compile("^[1-9]\\d{3}-(0[1-9]|1[0-2])-([0-2]\\d|3[0-1]) ([0-1]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$");
 
     private static final ValidateFunc temporalFunc;

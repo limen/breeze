@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.model.dao;
 
-import com.limengxiang.breeze.model.entity.ExecutorEntity;
+import com.limengxiang.breeze.model.entity.db.ExecutorEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,6 +28,6 @@ public interface ExecutorMapper {
         @Param("params") String params
     );
 
-    ExecutorEntity findOne(@Param("id") int id);
+    ExecutorEntity queryById(@Param("id") int id);
 
 }

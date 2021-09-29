@@ -1,12 +1,16 @@
 package com.limengxiang.breeze.manager;
 
-import com.limengxiang.breeze.auth.AuthCredential;
-import com.limengxiang.breeze.model.AppCredentialModel;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.limengxiang.breeze.config.Config;
+import com.limengxiang.breeze.http.auth.AuthCredential;
+import com.limengxiang.breeze.model.AppCredentialService;
 import com.limengxiang.breeze.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author LI Mengxiang <limengxiang876@gmail.com>
@@ -14,42 +18,36 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AuthManager {
 
+    private final AppCredentialService appCredentialService;
+
+    private final LoadingCache<String, AuthCredential> cachePool;
+
     @Autowired
-    private AppCredentialModel appCredentialModel;
-
-    private static class CredentialItem {
-        private long loadTs;
-        private AuthCredential credential;
-    }
-
-    private ConcurrentHashMap<String, CredentialItem> cachePool;
-
-    public AuthManager() {
-        cachePool = new ConcurrentHashMap<>();
+    public AuthManager(Config config, AppCredentialService appCredentialService) {
+        this.appCredentialService = appCredentialService;
+        cachePool = CacheBuilder.newBuilder()
+                .maximumSize(config.getExecutorCacheCapacity())
+                .expireAfterWrite(config.getExecutorCacheTime(), TimeUnit.SECONDS)
+                .build(
+                        new CacheLoader<String, AuthCredential>() {
+                            @Override
+                            public AuthCredential load(String appId) throws Exception {
+                                return AuthManager.this.appCredentialService.loadCredential(appId);
+                            }
+                        }
+                );
     }
 
     public AuthCredential getCredential(String appId) {
         if (StrUtil.isEmpty(appId)) {
             return null;
         }
-        long ts = System.currentTimeMillis();
-        CredentialItem credential = cachePool.get(appId);
-        if (credential == null || isCredentialCacheExpired(ts, credential)) {
-            refreshCredential(appId);
+        try {
+            return cachePool.get(appId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return cachePool.get(appId).credential;
-    }
-
-    private boolean isCredentialCacheExpired(long now, CredentialItem item) {
-        return now - item.loadTs > 120000;
-    }
-
-    private void refreshCredential(String appId) {
-        AuthCredential credential = appCredentialModel.loadCredential(appId);
-        CredentialItem tk = new CredentialItem();
-        tk.loadTs = System.currentTimeMillis();
-        tk.credential = credential;
-        cachePool.put(appId, tk);
+        return null;
     }
 
 }

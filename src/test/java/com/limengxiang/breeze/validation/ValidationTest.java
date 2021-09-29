@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.validation;
 
-import com.limengxiang.breeze.httpio.request.AbstractEntity;
+import com.limengxiang.breeze.http.request.RequestEntity;
 import com.limengxiang.breeze.validation.annotation.Length;
 import com.limengxiang.breeze.validation.annotation.Range;
 import com.limengxiang.breeze.validation.annotation.Temporal;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class ValidationTest {
 
-    static class TestEntity extends AbstractEntity {
+    static class TestEntity extends RequestEntity {
 
         @Length(min = 10, max = 20, msg = "string length out of range")
         String string;

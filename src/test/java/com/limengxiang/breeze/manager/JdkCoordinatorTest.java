@@ -1,5 +1,7 @@
 package com.limengxiang.breeze.manager;
 
+import com.limengxiang.breeze.domain.coordinator.ICoordinator;
+import com.limengxiang.breeze.domain.coordinator.JdkCoordinator;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

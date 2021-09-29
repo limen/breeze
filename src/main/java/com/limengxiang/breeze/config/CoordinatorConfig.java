@@ -1,8 +1,8 @@
 package com.limengxiang.breeze.config;
 
-import com.limengxiang.breeze.manager.ICoordinator;
-import com.limengxiang.breeze.manager.JdkCoordinator;
-import com.limengxiang.breeze.manager.RedisCoordinator;
+import com.limengxiang.breeze.domain.coordinator.ICoordinator;
+import com.limengxiang.breeze.domain.coordinator.JdkCoordinator;
+import com.limengxiang.breeze.domain.coordinator.RedisCoordinator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +22,10 @@ public class CoordinatorConfig {
     @Bean
     public ICoordinator coordinatorBean(@Autowired Config config) {
         if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
+            log.info("Using Redis coordinator");
             return new RedisCoordinator(config);
         }
+        log.info("Using JDK coordinator");
         return new JdkCoordinator(config);
     }
 

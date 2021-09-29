@@ -3,7 +3,7 @@ package com.limengxiang.breeze.utils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.limengxiang.breeze.consts.UtilConst;
+import com.limengxiang.breeze.validation.Validation;
 
 import java.text.SimpleDateFormat;
 
@@ -17,7 +17,7 @@ public class JSONUtil {
     static {
         mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.setDateFormat(new SimpleDateFormat(UtilConst.DATE_FORMAT_SEC));
+        mapper.setDateFormat(new SimpleDateFormat(Validation.DATE_FORMAT_SEC));
 //        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
 

@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.model.dao;
 
-import com.limengxiang.breeze.auth.AuthCredential;
+import com.limengxiang.breeze.http.auth.AuthCredential;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
