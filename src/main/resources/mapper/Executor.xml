@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.limengxiang.breeze.model.dao.ExecutorMapper">
+<mapper namespace="com.limengxiang.breeze.model.dao.ExecutorRepository">
     <insert id="insert">
         INSERT INTO brz_executor (id,name,type,config,params)
         VALUES (#{id},#{name},#{type},#{config},#{params})

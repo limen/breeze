@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
 @Mapper
-public interface AppCredentialMapper {
+public interface AppCredentialRepository {
 
     AuthCredential loadCredential(@Param("appId") String appId);
 

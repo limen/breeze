@@ -10,7 +10,7 @@ import java.util.List;
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
 @Mapper
-public interface AuditLogMapper {
+public interface AuditLogRepository {
 
     void insert(AuditLogEntity logEntity);
 

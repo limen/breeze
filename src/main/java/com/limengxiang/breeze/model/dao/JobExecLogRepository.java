@@ -9,7 +9,7 @@ import java.util.Date;
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
 @Mapper
-public interface JobExecLogMapper {
+public interface JobExecLogRepository {
 
     void insert(@Param("jobId") Long jobId,
                 @Param("context") String context,

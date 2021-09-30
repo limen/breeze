@@ -1,4 +1,4 @@
-package com.limengxiang.breeze.model.entity.query;
+package com.limengxiang.breeze.model.entity.value;
 
 import lombok.Data;
 

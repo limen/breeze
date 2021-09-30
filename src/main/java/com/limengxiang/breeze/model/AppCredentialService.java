@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.model;
 
 import com.limengxiang.breeze.http.auth.AuthCredential;
-import com.limengxiang.breeze.model.dao.AppCredentialMapper;
+import com.limengxiang.breeze.model.dao.AppCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppCredentialService {
 
-    private AppCredentialMapper appCredentialMapper;
+    private AppCredentialRepository appCredentialMapper;
 
     @Autowired
-    public AppCredentialService(AppCredentialMapper appCredentialMapper) {
+    public AppCredentialService(AppCredentialRepository appCredentialMapper) {
         this.appCredentialMapper = appCredentialMapper;
     }
 

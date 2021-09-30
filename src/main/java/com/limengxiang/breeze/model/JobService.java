@@ -1,9 +1,9 @@
 package com.limengxiang.breeze.model;
 
-import com.limengxiang.breeze.model.dao.JobMapper;
+import com.limengxiang.breeze.model.dao.JobRepository;
 import com.limengxiang.breeze.model.entity.db.JobEntity;
 import com.limengxiang.breeze.model.entity.db.JobExecLogEntity;
-import com.limengxiang.breeze.model.entity.query.JobStatEntity;
+import com.limengxiang.breeze.model.entity.value.JobStatEntity;
 import com.limengxiang.breeze.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,10 @@ import java.util.List;
 @Service
 public class JobService {
 
-    private JobMapper jobMapper;
+    private JobRepository jobMapper;
 
     @Autowired
-    public JobService(JobMapper jobMapper) {
+    public JobService(JobRepository jobMapper) {
         this.jobMapper = jobMapper;
     }
 

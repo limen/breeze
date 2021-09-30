@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.limengxiang.breeze.model.dao.JobMapper">
+<mapper namespace="com.limengxiang.breeze.model.dao.JobRepository">
     <insert id="insert">
         INSERT INTO brz_job (job_id,job_name,schedule_at,executor_id,job_params)
         VALUES (#{jobId},#{jobName},#{scheduleAt},#{executorId},#{params})
@@ -15,7 +15,7 @@
         SELECT job_id FROM brz_job WHERE job_id >= #{jobIdLow} AND job_id &lt;= #{jobIdUp}
         ORDER by job_id DESC LIMIT 1;
     </select>
-    <select id="queryJobStat" resultType="com.limengxiang.breeze.model.entity.query.JobStatEntity">
+    <select id="queryJobStat" resultType="com.limengxiang.breeze.model.entity.value.JobStatEntity">
         SELECT job.job_id,log.status AS exec_status
         FROM brz_job job
             LEFT JOIN brz_job_exec_log log

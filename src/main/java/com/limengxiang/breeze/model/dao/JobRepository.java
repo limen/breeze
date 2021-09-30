@@ -2,14 +2,14 @@ package com.limengxiang.breeze.model.dao;
 
 import com.limengxiang.breeze.model.entity.db.JobEntity;
 import com.limengxiang.breeze.model.entity.db.JobExecLogEntity;
-import com.limengxiang.breeze.model.entity.query.JobStatEntity;
+import com.limengxiang.breeze.model.entity.value.JobStatEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
-public interface JobMapper {
+public interface JobRepository {
 
     void insert(@Param("jobId") Object jobId,
                 @Param("jobName") String jobName,

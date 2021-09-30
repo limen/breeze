@@ -11,7 +11,7 @@ import com.limengxiang.breeze.http.response.RespFactory;
 import com.limengxiang.breeze.domain.job.IJobIdProvider;
 import com.limengxiang.breeze.domain.job.JobIdHelper;
 import com.limengxiang.breeze.model.JobService;
-import com.limengxiang.breeze.model.entity.query.JobStatEntity;
+import com.limengxiang.breeze.model.entity.value.JobStatEntity;
 import com.limengxiang.breeze.utils.DateUtil;
 import com.limengxiang.breeze.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.model;
 
 import com.limengxiang.breeze.domain.executor.ExecResult;
-import com.limengxiang.breeze.model.dao.JobExecLogMapper;
+import com.limengxiang.breeze.model.dao.JobExecLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +13,10 @@ import java.util.Date;
 @Service
 public class JobExecLogService {
 
-    private JobExecLogMapper jobExecLogMapper;
+    private JobExecLogRepository jobExecLogMapper;
 
     @Autowired
-    public JobExecLogService(JobExecLogMapper jobExecLogMapper) {
+    public JobExecLogService(JobExecLogRepository jobExecLogMapper) {
         this.jobExecLogMapper = jobExecLogMapper;
     }
 

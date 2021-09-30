@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.model;
 
-import com.limengxiang.breeze.model.dao.ExecutorMapper;
+import com.limengxiang.breeze.model.dao.ExecutorRepository;
 import com.limengxiang.breeze.model.entity.db.ExecutorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ExecutorService {
 
-    private ExecutorMapper executorMapper;
+    private ExecutorRepository executorMapper;
 
     @Autowired
-    public ExecutorService(ExecutorMapper executorMapper) {
+    public ExecutorService(ExecutorRepository executorMapper) {
         this.executorMapper = executorMapper;
     }
 

@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.model;
 
 import com.limengxiang.breeze.http.request.AuditLogQueryEntity;
-import com.limengxiang.breeze.model.dao.AuditLogMapper;
+import com.limengxiang.breeze.model.dao.AuditLogRepository;
 import com.limengxiang.breeze.model.entity.db.AuditLogEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,20 +15,20 @@ import java.util.List;
 @Service
 public class AuditLogService {
 
-    private AuditLogMapper auditLogMapper;
+    private AuditLogRepository auditLogRepository;
 
     @Autowired
-    public AuditLogService(AuditLogMapper auditLogMapper) {
-        this.auditLogMapper = auditLogMapper;
+    public AuditLogService(AuditLogRepository auditLogRepo) {
+        this.auditLogRepository = auditLogRepo;
     }
 
     @Transactional
     public void create(AuditLogEntity logEntity) {
-        auditLogMapper.insert(logEntity);
+        auditLogRepository.insert(logEntity);
     }
 
     public List<AuditLogEntity> find(AuditLogQueryEntity queryEntity) {
-        return auditLogMapper.query(queryEntity);
+        return auditLogRepository.query(queryEntity);
     }
 
 }

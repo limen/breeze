@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
 @Mapper
-public interface ExecutorMapper {
+public interface ExecutorRepository {
 
     int insert(
         @Param("id") Integer id,
