@@ -33,7 +33,7 @@ public class AuthPointHandler implements PointHandler {
 
     @Override
     public void before(ProceedingJoinPoint joinPoint, HttpServletRequest request) {
-        if (!config.isWebServer()) {
+        if (!config.provideWebService()) {
             throw new WebServiceNotAvailableException();
         }
 

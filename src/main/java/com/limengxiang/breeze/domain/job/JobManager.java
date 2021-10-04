@@ -35,16 +35,11 @@ public class JobManager {
     private static JobPostExecHandler jobPostExecHandler;
     private static ExecutionService executionService;
 
-    private static final int scannerWaitSeconds = 5;
-    private static final long scannerWaitMillis = scannerWaitSeconds * 1000;
-
-    private static final int availableProcessors = Runtime.getRuntime().availableProcessors();
-
     private static volatile boolean shutdown = false;
 
     private static final ThreadPoolExecutor jobConsumerThreadPool = new ThreadPoolExecutor(
-            2 * availableProcessors,
-            2 * availableProcessors,
+            config.getJobConsumerPoolSize(),
+            config.getJobConsumerPoolSize(),
             0,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(),
@@ -53,8 +48,8 @@ public class JobManager {
 
     // scanner wait for N seconds, so N+1 workers are enough
     private static final ThreadPoolExecutor jobScannerThreadPool = new ThreadPoolExecutor(
-            scannerWaitSeconds + 1,
-            scannerWaitSeconds + 1,
+            config.getJobScannerWaitSeconds() + 1,
+            config.getJobScannerWaitSeconds() + 1,
             0,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(),
@@ -70,7 +65,7 @@ public class JobManager {
 
     public static void start() {
         Config conf = SpringContextUtil.getBean(Config.class);
-        if (conf.isJobConsumer()) {
+        if (conf.runJobConsumer()) {
             registerShutdownHook();
             log.info("Start job manager");
             start(conf);
@@ -99,7 +94,7 @@ public class JobManager {
         }
     }
 
-    static void start(Config conf) {
+    private static void start(Config conf) {
 
         config = conf;
         coordinator = SpringContextUtil.getBean(ICoordinator.class);
@@ -113,7 +108,7 @@ public class JobManager {
         NamedThreadFactory.newThread("job-queue-dispatcher", new JobQueueDispatcher()).start();
     }
 
-    static class JobScannerDispatcher implements Runnable {
+    private static class JobScannerDispatcher implements Runnable {
 
         @Override
         public void run() {
@@ -138,7 +133,7 @@ public class JobManager {
         }
     }
 
-    static class JobScanner implements Runnable {
+    private static class JobScanner implements Runnable {
 
         private DutyInfo dutyInfo;
 
@@ -149,6 +144,7 @@ public class JobManager {
         @Override
         public void run() {
             try {
+                long waitMillis = config.getJobScannerWaitSeconds() * 1000L;
                 int jobNum = 0;
                 Long jobIdLow = null;
                 long jobIdUp = jobIdManager.lastOnTime(dutyInfo.tickTo());
@@ -173,7 +169,7 @@ public class JobManager {
                     }
                     if (jobIds == null || jobIds.size() < config.getJobScanBatchSize()) {
                         // wait for a while
-                        if (System.currentTimeMillis() - tickToMillis > scannerWaitMillis) {
+                        if (System.currentTimeMillis() - tickToMillis > waitMillis) {
                             break;
                         }
                         Thread.sleep(10);
@@ -187,7 +183,7 @@ public class JobManager {
         }
     }
 
-    static class JobQueueDispatcher implements Runnable {
+    private static class JobQueueDispatcher implements Runnable {
 
         @Override
         public void run() {
@@ -195,7 +191,7 @@ public class JobManager {
             while (!shutdown) {
                 try {
                     // If the pool is busy, wait for a while
-                    if (jobConsumerThreadPool.getQueue().size() > config.getJobThreadPoolBusySize()) {
+                    if (jobConsumerThreadPool.getQueue().size() > config.getJobConsumerThreadPoolBusySize()) {
                         Thread.sleep(10);
                         continue;
                     }
