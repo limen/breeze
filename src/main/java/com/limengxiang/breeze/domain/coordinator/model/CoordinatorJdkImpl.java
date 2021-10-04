@@ -5,7 +5,7 @@ import com.limengxiang.breeze.config.Config;
 /**
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
-public class JdkCoordinator implements ICoordinator {
+public class CoordinatorJdkImpl implements ICoordinator {
 
     private Config config;
 
@@ -15,22 +15,22 @@ public class JdkCoordinator implements ICoordinator {
 
     private final int dutyMaxPeriod;
 
-    public JdkCoordinator() {
+    public CoordinatorJdkImpl() {
         cursorTick = System.currentTimeMillis() / 1000;
         dutyMaxPeriod = 10;
     }
 
-    public JdkCoordinator(long cursorTick) {
+    public CoordinatorJdkImpl(long cursorTick) {
         this.cursorTick = cursorTick;
         dutyMaxPeriod = 10;
     }
 
-    public JdkCoordinator(long cursorTick, int dutyPeriod) {
+    public CoordinatorJdkImpl(long cursorTick, int dutyPeriod) {
         this.cursorTick = cursorTick;
         this.dutyMaxPeriod = dutyPeriod;
     }
 
-    public JdkCoordinator(Config config) {
+    public CoordinatorJdkImpl(Config config) {
         this.config = config;
         cursorTick = System.currentTimeMillis() / 1000;
         dutyMaxPeriod = config.getCoordinatorDutyMaxPeriod();

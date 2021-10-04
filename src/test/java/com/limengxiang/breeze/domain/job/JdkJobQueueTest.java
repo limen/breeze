@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.domain.job;
 
-import com.limengxiang.breeze.domain.job.model.JdkJobQueue;
+import com.limengxiang.breeze.domain.job.model.JobQueueJdkImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ public class JdkJobQueueTest {
 
     @Test
     public void testJobQueue() {
-        JdkJobQueue jobQueue = new JdkJobQueue();
+        JobQueueJdkImpl jobQueue = new JobQueueJdkImpl();
         jobQueue.push(Arrays.asList(1L,2L,3L));
         Assertions.assertEquals(jobQueue.size(), 3);
         Assertions.assertEquals(jobQueue.pop(), 1);

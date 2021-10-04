@@ -13,4 +13,12 @@ public interface IJobQueue {
 
     long size();
 
+    boolean isEmpty();
+
+    boolean isFull();
+
+    void awaitNotEmpty();
+
+    void awaitNotFull();
+
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  *
- * todo load config customizable
+ * todo load config from remote
  *
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
@@ -41,7 +41,7 @@ public class Config {
     private boolean provideWebService = true;
 
     // if the job queue size approaches this value, the later jobs would be waiting.
-    private int jobQueueBusySize = 1000;
+    private int jobQueueBusySize = 2000;
 
     // if the job consumer thread pool size approaches this value, the dispatching thread would be waiting
     private int jobConsumerThreadPoolBusySize = 100;

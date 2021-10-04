@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private AuthService authManager;
+    private AuthService authService;
 
     @Autowired
-    public AuthController(AuthService authManager) {
-        this.authManager = authManager;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping(HttpPrelude.URI_AUTH_CHECK_TOKEN)
@@ -33,7 +33,7 @@ public class AuthController {
             return RespFactory.error("Invalid param");
         }
 
-        AuthCredential credential = authManager.getCredential(entity.getAppId());
+        AuthCredential credential = authService.getCredential(entity.getAppId());
 
         if (credential != null && credential.getToken().equals(entity.getToken())) {
             return RespFactory.success();

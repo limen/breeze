@@ -23,12 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthPointHandler implements PointHandler {
 
     private Config config;
-    private AuthService authManager;
+    private AuthService authService;
 
     @Autowired
-    public AuthPointHandler(Config config, AuthService authManager) {
+    public AuthPointHandler(Config config, AuthService authService) {
         this.config = config;
-        this.authManager = authManager;
+        this.authService = authService;
     }
 
     @Override
@@ -37,14 +37,14 @@ public class AuthPointHandler implements PointHandler {
             throw new WebServiceNotAvailableException();
         }
 
-        AuthCredential credential = authManager.getCredential(request.getHeader(HttpPrelude.HEADER_APPID));
+        AuthCredential credential = authService.getCredential(request.getHeader(HttpPrelude.HEADER_APPID));
         if (credential == null
                 || credential.getToken() == null
                 || !credential.getToken().equals(request.getHeader(HttpPrelude.HEADER_APP_TOKEN))
         ) {
             throw new AuthException();
         }
-        if (!authManager.canDo(credential, OpEnum.fromRequest(request))) {
+        if (!authService.canDo(credential, OpEnum.fromRequest(request))) {
             throw new PermissionException();
         }
     }

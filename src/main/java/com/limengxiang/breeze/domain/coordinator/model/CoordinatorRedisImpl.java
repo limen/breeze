@@ -50,14 +50,14 @@ else
 end
 return {s,tick, tickTo};
  */
-public class RedisCoordinator implements ICoordinator {
+public class CoordinatorRedisImpl implements ICoordinator {
 
     private static final String COO_LOCK_KEY = "brz_coordinator_lock";
     private static final String COO_TICK_KEY = "brz_coordinator_tick";
 
-    private Config config;
+    private final Config config;
 
-    public RedisCoordinator(Config config) {
+    public CoordinatorRedisImpl(Config config) {
         this.config = config;
     }
 

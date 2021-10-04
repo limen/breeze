@@ -1,5 +1,6 @@
-package com.limengxiang.breeze.config;
+package com.limengxiang.breeze.domain.job;
 
+import com.limengxiang.breeze.config.Config;
 import com.limengxiang.breeze.domain.job.model.*;
 import com.limengxiang.breeze.domain.job.service.JobService;
 import com.limengxiang.breeze.redis.RedisOps;
@@ -24,10 +25,10 @@ public class JobConfig {
                                   @Autowired RedisOps redisOps) {
         if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
             log.info("Using Redis job queue");
-            return new RedisJobQueue(redisOps);
+            return new JobQueueRedisImpl(redisOps, config.getJobQueueBusySize());
         }
         log.info("Using JDK job queue");
-        return new JdkJobQueue();
+        return new JobQueueJdkImpl(config.getJobQueueBusySize());
     }
 
     @Bean
@@ -36,14 +37,10 @@ public class JobConfig {
                                            @Autowired(required = false) RedisOps redisOps) {
         if (config.getDeployMode().equals(Config.DeployMode.cluster)) {
             log.info("Using Redis job id provider");
-            RedisJobIdProvider jobIdManager = new RedisJobIdProvider(redisOps, jobService);
-            jobIdManager.setConfig(config);
-            return jobIdManager;
+            return new JobIdProviderRedisImpl(redisOps, jobService);
         }
         log.info("Using JDK job id provider");
-        JdkJobIdProvider jobIdManager = new JdkJobIdProvider(jobService);
-        jobIdManager.setConfig(config);
-        return jobIdManager;
+        return new JobIdProviderJdkImpl(jobService);
     }
 
 }

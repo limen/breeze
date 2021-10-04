@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -35,10 +36,14 @@ public class JobService {
      * @param jobIdLow inclusive
      * @param jobIdUp inclusive
      * @param limit
-     * @return
+     * @return not null
      */
     public List<Long> findJobIdsInRange(Long jobIdLow, Long jobIdUp, int limit) {
-        return jobMapper.queryJobIdsInRange(jobIdLow, jobIdUp, limit);
+        List<Long> ids = jobMapper.queryJobIdsInRange(jobIdLow, jobIdUp, limit);
+        if (ids == null) {
+            return Collections.emptyList();
+        }
+        return ids;
     }
 
     /**

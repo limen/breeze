@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
 @Data
-public class JdkJobIdProvider implements IJobIdProvider {
+public class JobIdProviderJdkImpl implements IJobIdProvider {
 
     private JobService jobService;
 
@@ -40,7 +40,7 @@ public class JdkJobIdProvider implements IJobIdProvider {
                     }
             );
 
-    public JdkJobIdProvider(JobService jobService) {
+    public JobIdProviderJdkImpl(JobService jobService) {
         this.jobService = jobService;
     }
 

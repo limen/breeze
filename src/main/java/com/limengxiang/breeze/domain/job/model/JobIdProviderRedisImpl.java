@@ -1,6 +1,5 @@
 package com.limengxiang.breeze.domain.job.model;
 
-import com.limengxiang.breeze.config.Config;
 import com.limengxiang.breeze.domain.job.JobPrelude;
 import com.limengxiang.breeze.domain.job.service.JobService;
 import com.limengxiang.breeze.redis.RedisOps;
@@ -11,21 +10,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author LI Mengxiang <limengxiang876@gmail.com>
  */
-public class RedisJobIdProvider implements IJobIdProvider {
+public class JobIdProviderRedisImpl implements IJobIdProvider {
 
-    private Config config;
+    private final RedisOps redisOps;
 
-    private RedisOps redisOps;
+    private final JobService jobService;
 
-    private JobService jobService;
-
-    public RedisJobIdProvider(RedisOps redisOps, JobService jobService) {
+    public JobIdProviderRedisImpl(RedisOps redisOps, JobService jobService) {
         this.redisOps = redisOps;
         this.jobService = jobService;
-    }
-
-    public void setConfig(Config conf) {
-        config = conf;
     }
 
     @Override

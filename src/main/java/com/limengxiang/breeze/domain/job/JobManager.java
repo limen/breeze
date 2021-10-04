@@ -35,26 +35,13 @@ public class JobManager {
     private static JobPostExecHandler jobPostExecHandler;
     private static ExecutionService executionService;
 
+    private static long jobScannerWaitMillis;
+
     private static volatile boolean shutdown = false;
 
-    private static final ThreadPoolExecutor jobConsumerThreadPool = new ThreadPoolExecutor(
-            config.getJobConsumerPoolSize(),
-            config.getJobConsumerPoolSize(),
-            0,
-            TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>(),
-            new NamedThreadFactory("job-consumer")
-    );
+    private static ThreadPoolExecutor jobConsumerThreadPool;
 
-    // scanner wait for N seconds, so N+1 workers are enough
-    private static final ThreadPoolExecutor jobScannerThreadPool = new ThreadPoolExecutor(
-            config.getJobScannerWaitSeconds() + 1,
-            config.getJobScannerWaitSeconds() + 1,
-            0,
-            TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>(),
-            new NamedThreadFactory("job-scanner")
-    );
+    private static ThreadPoolExecutor jobScannerThreadPool;
 
     private static void registerShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -103,6 +90,25 @@ public class JobManager {
         jobQueue = SpringContextUtil.getBean(IJobQueue.class);
         jobPostExecHandler = SpringContextUtil.getBean(JobPostExecHandler.class);
         executionService = SpringContextUtil.getBean(ExecutionService.class);
+        jobScannerWaitMillis = config.getJobScannerWaitSeconds() * 1000L;
+
+        jobConsumerThreadPool = new ThreadPoolExecutor(
+                config.getJobConsumerPoolSize(),
+                config.getJobConsumerPoolSize(),
+                0,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(),
+                new NamedThreadFactory("job-consumer")
+        );
+        // scanner wait for N seconds, so N+1 workers are enough
+        jobScannerThreadPool = new ThreadPoolExecutor(
+                config.getJobScannerWaitSeconds() + 1,
+                config.getJobScannerWaitSeconds() + 1,
+                0,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(),
+                new NamedThreadFactory("job-scanner")
+        );
 
         NamedThreadFactory.newThread("job-scanner-dispatcher", new JobScannerDispatcher()).start();
         NamedThreadFactory.newThread("job-queue-dispatcher", new JobQueueDispatcher()).start();
@@ -135,7 +141,7 @@ public class JobManager {
 
     private static class JobScanner implements Runnable {
 
-        private DutyInfo dutyInfo;
+        private final DutyInfo dutyInfo;
 
         JobScanner(DutyInfo dutyInfo) {
             this.dutyInfo = dutyInfo;
@@ -144,7 +150,6 @@ public class JobManager {
         @Override
         public void run() {
             try {
-                long waitMillis = config.getJobScannerWaitSeconds() * 1000L;
                 int jobNum = 0;
                 Long jobIdLow = null;
                 long jobIdUp = jobIdManager.lastOnTime(dutyInfo.tickTo());
@@ -152,27 +157,31 @@ public class JobManager {
                 long firstJobIdForDuty = jobIdManager.firstOnTime(dutyInfo.tickFrom());
                 Date startAt = new Date();
                 while (!shutdown) {
-                    long queueSize = jobQueue.size();
-                    if (queueSize > config.getJobQueueBusySize()) {
-                        Thread.sleep(10);
-                        continue;
-                    }
+                    jobQueue.awaitNotFull();
                     List<Long> jobIds = jobService.findJobIdsInRange(
                             jobIdLow == null ? firstJobIdForDuty : jobIdLow,
                             jobIdUp,
-                            config.getJobScanBatchSize());
-                    if (jobIds != null && !jobIds.isEmpty()) {
+                            config.getJobScanBatchSize()
+                    );
+                    // double-check
+                    if (jobQueue.isFull()) {
+                        continue;
+                    }
+                    if (shutdown) {
+                        break;
+                    }
+                    if (!jobIds.isEmpty()) {
                         jobQueue.push(jobIds);
                         // add 1 to step over the last one
                         jobIdLow = (Long) jobIds.get(jobIds.size() - 1) + 1;
                         jobNum += jobIds.size();
                     }
-                    if (jobIds == null || jobIds.size() < config.getJobScanBatchSize()) {
-                        // wait for a while
-                        if (System.currentTimeMillis() - tickToMillis > waitMillis) {
+                    // job ids maybe later than clock, wait for a while
+                    if (jobIds.size() < config.getJobScanBatchSize()) {
+                        if (System.currentTimeMillis() - tickToMillis > jobScannerWaitMillis) {
                             break;
                         }
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                     }
                 }
                 log.info("Coordinator finishes duty {}:{}, started at:{}, publishes jobs {}", dutyInfo.tickFrom(), dutyInfo.tickTo(), startAt, jobNum);
@@ -191,13 +200,18 @@ public class JobManager {
             while (!shutdown) {
                 try {
                     // If the pool is busy, wait for a while
-                    if (jobConsumerThreadPool.getQueue().size() > config.getJobConsumerThreadPoolBusySize()) {
+                    if (jobConsumerThreadPool.getQueue().size() >= config.getJobConsumerThreadPoolBusySize()) {
                         Thread.sleep(10);
                         continue;
                     }
+                    // need double-check
+                    jobQueue.awaitNotEmpty();
+                    if (shutdown) {
+                        break;
+                    }
                     Long jobId = jobQueue.pop();
+                    // double-check here
                     if (jobId == null) {
-                        Thread.sleep(1);
                         continue;
                     }
                     JobConsumer jobConsumer = new JobConsumer();

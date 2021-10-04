@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.manager;
 
 import com.limengxiang.breeze.domain.coordinator.model.DutyInfo;
-import com.limengxiang.breeze.domain.coordinator.model.JdkCoordinator;
+import com.limengxiang.breeze.domain.coordinator.model.CoordinatorJdkImpl;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class JdkCoordinatorTest {
     @Test
     public void test() {
         long startTick = System.currentTimeMillis() / 1000;
-        JdkCoordinator coordinator = new JdkCoordinator();
+        CoordinatorJdkImpl coordinator = new CoordinatorJdkImpl();
         Assertions.assertEquals(coordinator.getCursorTick(), startTick);
         DutyInfo dutyInfo = coordinator.acquireDuty();
         Assertions.assertTrue(dutyInfo.isOn());
