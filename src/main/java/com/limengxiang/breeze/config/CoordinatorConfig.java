@@ -1,8 +1,8 @@
 package com.limengxiang.breeze.config;
 
-import com.limengxiang.breeze.domain.coordinator.ICoordinator;
-import com.limengxiang.breeze.domain.coordinator.JdkCoordinator;
-import com.limengxiang.breeze.domain.coordinator.RedisCoordinator;
+import com.limengxiang.breeze.domain.coordinator.model.ICoordinator;
+import com.limengxiang.breeze.domain.coordinator.model.JdkCoordinator;
+import com.limengxiang.breeze.domain.coordinator.model.RedisCoordinator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

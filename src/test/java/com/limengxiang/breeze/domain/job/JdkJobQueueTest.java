@@ -1,5 +1,6 @@
 package com.limengxiang.breeze.domain.job;
 
+import com.limengxiang.breeze.domain.job.model.JdkJobQueue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

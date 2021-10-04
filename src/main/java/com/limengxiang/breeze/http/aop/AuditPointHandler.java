@@ -1,8 +1,8 @@
 package com.limengxiang.breeze.http.aop;
 
 import com.limengxiang.breeze.http.HttpPrelude;
-import com.limengxiang.breeze.model.AuditLogService;
-import com.limengxiang.breeze.model.entity.db.AuditLogEntity;
+import com.limengxiang.breeze.domain.audit.service.AuditLogService;
+import com.limengxiang.breeze.domain.audit.model.AuditLogEntity;
 import com.limengxiang.breeze.utils.JSONUtil;
 import com.limengxiang.breeze.utils.StrUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -41,8 +41,8 @@ public class AuditPointHandler implements PointHandler {
         logEntity.setAppId(request.getHeader(HttpPrelude.HEADER_APPID));
         logEntity.setUri(request.getRequestURI());
         logEntity.setIp(request.getRemoteAddr());
-        logEntity.setReq(StrUtil.trimToLength(JSONUtil.stringify(args), 1024));
-        logEntity.setResp(StrUtil.trimToLength(JSONUtil.stringify(resp), 1024));
+        logEntity.setReq(JSONUtil.stringify(args));
+        logEntity.setResp(JSONUtil.stringify(resp));
 
         auditLogService.create(logEntity);
     }

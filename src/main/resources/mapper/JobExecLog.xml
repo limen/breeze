@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.limengxiang.breeze.model.dao.JobExecLogRepository">
+<mapper namespace="com.limengxiang.breeze.domain.job.repository.JobExecLogRepository">
     <insert id="insert">
         INSERT INTO brz_job_exec_log (job_id,context,status,exec_at,elapse,created_at)
         VALUES (#{jobId},#{context},#{status},#{execAt},#{elapse},#{createdAt})

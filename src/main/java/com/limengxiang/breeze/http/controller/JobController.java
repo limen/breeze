@@ -8,10 +8,10 @@ import com.limengxiang.breeze.http.request.JobPostEntity;
 import com.limengxiang.breeze.http.request.JobStatQueryEntity;
 import com.limengxiang.breeze.http.response.RespEntity;
 import com.limengxiang.breeze.http.response.RespFactory;
-import com.limengxiang.breeze.domain.job.IJobIdProvider;
+import com.limengxiang.breeze.domain.job.model.IJobIdProvider;
 import com.limengxiang.breeze.domain.job.JobIdHelper;
-import com.limengxiang.breeze.model.JobService;
-import com.limengxiang.breeze.model.entity.value.JobStatEntity;
+import com.limengxiang.breeze.domain.job.service.JobService;
+import com.limengxiang.breeze.domain.job.model.JobStatValue;
 import com.limengxiang.breeze.utils.DateUtil;
 import com.limengxiang.breeze.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,13 +100,13 @@ public class JobController {
         long jobIdUp = JobIdHelper.lastOnTime(DateUtil.parse(entity.getToTime()));
 
         Map<String, Object> resp = new HashMap<>();
-        List<JobStatEntity> data = jobService.jobStat(jobIdLow, jobIdUp, ExecutorPrelude.ExecStatus.sync_ok.getCode());
+        List<JobStatValue> data = jobService.jobStat(jobIdLow, jobIdUp, ExecutorPrelude.ExecStatus.sync_ok.getCode());
 
         Map<Long, Integer> jobExecStatus = new HashMap<>();
         int total = 0;
         int failed = 0;
         int missed = 0;
-        for (JobStatEntity jobStat : data) {
+        for (JobStatValue jobStat : data) {
             if (jobExecStatus.containsKey(jobStat.getJobId())) {
                 continue;
             }

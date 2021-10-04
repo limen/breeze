@@ -1,8 +1,8 @@
 package com.limengxiang.breeze.config;
 
-import com.limengxiang.breeze.domain.job.*;
-import com.limengxiang.breeze.model.JobService;
-import com.limengxiang.breeze.model.dao.RedisOps;
+import com.limengxiang.breeze.domain.job.model.*;
+import com.limengxiang.breeze.domain.job.service.JobService;
+import com.limengxiang.breeze.redis.RedisOps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

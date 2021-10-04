@@ -1,11 +1,11 @@
 package com.limengxiang.breeze.http.controller;
 
-import com.limengxiang.breeze.http.auth.AuthCredential;
+import com.limengxiang.breeze.domain.auth.model.AuthCredential;
+import com.limengxiang.breeze.domain.auth.service.AuthService;
 import com.limengxiang.breeze.http.HttpPrelude;
 import com.limengxiang.breeze.http.request.CheckTokenEntity;
 import com.limengxiang.breeze.http.response.RespEntity;
 import com.limengxiang.breeze.http.response.RespFactory;
-import com.limengxiang.breeze.manager.AuthManager;
 import com.limengxiang.breeze.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private AuthManager authManager;
+    private AuthService authManager;
 
     @Autowired
-    public AuthController(AuthManager authManager) {
+    public AuthController(AuthService authManager) {
         this.authManager = authManager;
     }
 

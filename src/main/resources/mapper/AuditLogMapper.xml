@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.limengxiang.breeze.model.dao.AuditLogRepository">
-    <insert id="insert" parameterType="com.limengxiang.breeze.model.entity.db.AuditLogEntity">
+<mapper namespace="com.limengxiang.breeze.domain.audit.repository.AuditLogRepository">
+    <insert id="insert" parameterType="com.limengxiang.breeze.domain.audit.model.AuditLogEntity">
         INSERT INTO brz_audit_log (app_id,uri,ip,req,resp)
         VALUES (#{appId},#{uri},#{ip},#{req},#{resp})
     </insert>
-    <select id="query" parameterType="com.limengxiang.breeze.http.request.AuditLogQueryEntity" resultType="com.limengxiang.breeze.model.entity.db.AuditLogEntity">
+    <select id="query" parameterType="com.limengxiang.breeze.http.request.AuditLogQueryEntity" resultType="com.limengxiang.breeze.domain.audit.model.AuditLogEntity">
         SELECT * FROM brz_audit_log
         WHERE created_at >= #{fromTimestamp}
         AND created_at &lt;= #{toTimestamp}

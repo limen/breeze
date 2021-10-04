@@ -1,6 +1,6 @@
 package com.limengxiang.breeze.manager;
 
-import com.limengxiang.breeze.domain.job.JdkJobIdProvider;
+import com.limengxiang.breeze.domain.job.model.JdkJobIdProvider;
 import com.limengxiang.breeze.domain.job.JobIdHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

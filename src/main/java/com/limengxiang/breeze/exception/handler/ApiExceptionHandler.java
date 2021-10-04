@@ -27,7 +27,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(PermissionException.class)
     public RespEntity handlePermissionException(HttpServletRequest request, Exception ex) {
-        return RespFactory.error(HttpPrelude.CODE_PRIV_ERR, "Not permitted");
+        return RespFactory.error(HttpPrelude.CODE_PR_ERR, "Not permitted");
     }
 
     @ExceptionHandler(InvalidParamException.class)

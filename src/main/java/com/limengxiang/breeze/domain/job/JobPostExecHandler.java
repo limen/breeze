@@ -1,7 +1,7 @@
 package com.limengxiang.breeze.domain.job;
 
-import com.limengxiang.breeze.domain.executor.ExecResult;
-import com.limengxiang.breeze.model.JobExecLogService;
+import com.limengxiang.breeze.domain.executor.model.ExecResult;
+import com.limengxiang.breeze.domain.job.service.JobExecLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

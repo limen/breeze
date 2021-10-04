@@ -11,7 +11,7 @@ public class HttpPrelude {
     public static final String MsgOK = "ok";
 
     public static final int CODE_AUTH_ERR = 401;
-    public static final int CODE_PRIV_ERR = 400;
+    public static final int CODE_PR_ERR = 400;
 
     public static final String HEADER_APPID = "AppId";
     public static final String HEADER_APP_TOKEN = "AppToken";

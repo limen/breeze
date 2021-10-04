@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.limengxiang.breeze.model.dao.ExecutorRepository">
+<mapper namespace="com.limengxiang.breeze.domain.executor.repository.ExecutorRepository">
     <insert id="insert">
         INSERT INTO brz_executor (id,name,type,config,params)
         VALUES (#{id},#{name},#{type},#{config},#{params})
     </insert>
-    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.limengxiang.breeze.model.entity.db.ExecutorEntity">
+    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.limengxiang.breeze.domain.executor.model.ExecutorEntity">
         INSERT INTO brz_executor (name,type,config,params)
         VALUES (#{name},#{type},#{config},#{params})
     </insert>
@@ -16,7 +16,7 @@
         SET name = #{name},type = #{type},confif = #{config},params = #{params}, updated_at=current_timestamp
         WHERE id=#{id}
     </update>
-    <select id="queryById" resultType="com.limengxiang.breeze.model.entity.db.ExecutorEntity">
+    <select id="queryById" resultType="com.limengxiang.breeze.domain.executor.model.ExecutorEntity">
         SELECT * FROM brz_executor
         WHERE id = #{id} LIMIT 1
     </select>
